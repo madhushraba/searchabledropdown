@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
+const options = [
+  "Apple",
+  "Banana",
+  "Berry",
+  "Cherry",
+  "Donuts",
+  "Elderberry",
+  "Fig",
+  "Grape",
+  "Guava",
+  "Honeydew",
+  "Ice",
+  "Jackfruit",
+];
+
+function SearchableDropdown() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const filteredOptions = options.filter((option) =>
+    option.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="input">
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={handleInputChange}
+      />
+      <select value={selectedOption}
+               onChange={handleSelectChange}>
+        <option value="">Select an option</option>
+        {filteredOptions.map((option) => ( 
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
 
-export default App;
+export default SearchableDropdown;
